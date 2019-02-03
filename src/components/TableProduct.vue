@@ -23,8 +23,8 @@
         <th><p>Category</p></th>
         <th><p>Price</p></th>
       </tr>
-      <tr v-for="(item, index) in info"
-          v-if=" (SearchItem == item.title) && (state == 'visible')"
+      <tr v-for="(item, index) in tableFilter"
+          
       >
         <th> {{ item.id }} </th>
         <th>
@@ -59,73 +59,68 @@ export default {
     },
     onItem(index){
       this.$emit('onProduct', index)
+    },
+    findBy: function (list, value, column) {
+      return list.filter(function (item) {
+        return item[column].includes(value)
+      })
     }
   },
   computed: {
-    
-  },
-  watch:{
-    NeededItem(index){
-      if(this.SearchItem != this.item.title){
-        this.state = 'unvisible'
-      }
+    tableFilter: function () {
+        return this.findBy(this.info, this.SearchItem, 'title')
     }
   }
 }
 </script>
 
 <style scoped>
-* {
-    box-sizing: border-box;
-  }
-  .message{
-    text-align: left;
-    margin-bottom: 25px;
-  }
-  .select span{
-    margin-right: 25px;
-    color: grey;
-    font-weight: 700;
-    font-size: 18px;
-  }
-  .select {
-    position: relative;
-    display: inline-block;
-    float:left;
-  }
-  .select:after {
-    background: url('./select_arrow.png') no-repeat;
-    content: "";
-    padding: 0;
-    font-size: 16px;
-    position: absolute;
-    right: 4px;
-    top: 20px;
-    z-index: 1;
-    text-align: center;
-    width: 10%;
-    height: 100%;
-    pointer-events: none;
-    box-sizing: border-box;
-  }
-  select {
-    height: 50px;
-    width: 200px;
-    padding-left: 10px;
-    border-radius: 5px;
-    border: 1px solid grey;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
-  }
-  select option{
-    color:grey;
-  }
-
-
-
-
-
+*{
+  box-sizing: border-box;
+}
+.message{
+  text-align: left;
+  margin-bottom: 25px;
+}
+.select span{
+  margin-right: 25px;
+  color: grey;
+  font-weight: 700;
+  font-size: 18px;
+}
+.select {
+  position: relative;
+  display: inline-block;
+  float:left;
+}
+.select:after {
+  background: url('./select_arrow.png') no-repeat;
+  content: "";
+  padding: 0;
+  font-size: 16px;
+  position: absolute;
+  right: 4px;
+  top: 20px;
+  z-index: 1;
+  text-align: center;
+  width: 10%;
+  height: 100%;
+  pointer-events: none;
+  box-sizing: border-box;
+}
+select {
+  height: 50px;
+  width: 200px;
+  padding-left: 10px;
+  border-radius: 5px;
+  border: 1px solid grey;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+select option{
+  color:grey;
+}
 form {
   position: relative;
   width: 300px;
