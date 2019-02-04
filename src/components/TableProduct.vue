@@ -3,8 +3,10 @@
     <h2 class="message"> {{ message }}</h2>
     <div class="select">
       <span>Category</span>
-      <select>
-        <option value="All">All</option>
+      <select v-model="SelectCategory"
+              v-on:click="ArrPushSort"
+      >
+        <option value="All" selected>All</option>
         <option value="Зимние шины">Зимние шины</option>
         <option value="Летние шины">Летние шины</option>
         <option value="Всесезонные шины">Всесезонные шины</option>
@@ -23,8 +25,7 @@
         <th><p>Category</p></th>
         <th><p>Price</p></th>
       </tr>
-      <tr v-for="(item, index) in tableFilter"
-          
+      <tr v-for="(item, index) in SearchtableFilter"
       >
         <th> {{ item.id }} </th>
         <th>
@@ -50,7 +51,8 @@ export default {
       message: 'items catalog',
       info: json.items,
       state: 'visible',
-      SearchItem:''
+      SearchItem:'',
+      SelectCategory: 'All',
     }
   },
   methods: {
@@ -60,15 +62,50 @@ export default {
     onItem(index){
       this.$emit('onProduct', index)
     },
-    findBy: function (list, value, column) {
+    SearchfindBy: function (list, value, column) {
       return list.filter(function (item) {
         return item[column].includes(value)
       })
-    }
+    },
+    ArrPushSort(){
+      let sortArr = [];
+      let index;
+      let len;
+      if(this.SelectCategory == 'All'){
+        for(index = 0, len = this.info.length; index < len; ++index){ 
+          sortArr.push(this.info[index]);
+        }
+        return sortArr
+      }
+      else if(this.SelectCategory == 'Зимние шины'){
+        for(index = 0, len = this.info.length; index < len; ++index){
+          if(this.info[index].category == 'Зимние шины'){
+            sortArr.push(this.info[index]);
+          } 
+        }
+        return sortArr
+      }
+      else if(this.SelectCategory == 'Летние шины'){
+        for(index = 0, len = this.info.length; index < len; ++index){
+          if(this.info[index].category == 'Летние шины'){
+            sortArr.push(this.info[index]);
+          }
+        }
+        return sortArr
+      }
+      else if(this.SelectCategory == 'Всесезонные шины'){
+        for(index = 0, len = this.info.length; index < len; ++index){
+          if(this.info[index].category == 'Всесезонные шины'){
+            sortArr.push(this.info[index]);
+          }
+        }
+        return sortArr
+      }
+    }   
   },
   computed: {
-    tableFilter: function () {
-        return this.findBy(this.info, this.SearchItem, 'title')
+    SearchtableFilter: function () {
+        return this.SearchfindBy(this.ArrPushSort(), this.SearchItem, 'title')
     }
   }
 }

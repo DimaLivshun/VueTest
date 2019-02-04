@@ -5,7 +5,6 @@
     </app-search-head>
     <app-table-product v-if="state == 'main' "
                        v-on:onProduct="onProduct"
-                       v-bind:itemTitle="ItemSearchForm"
     ></app-table-product>
     <app-product v-if="state == 'product' "
                  v-bind:settings="selectProduct"
@@ -21,8 +20,7 @@ export default {
     return {
     myJson: json.items,
     state: 'main',
-    selectProduct: '',
-    ItemSearchForm: ''
+    selectProduct: ''
     }
   },
   methods: {
@@ -32,9 +30,6 @@ export default {
    },
    goBack(){
     this.state = 'main'
-   },
-   neededItem(title){
-    this.ItemSearchForm = title;
    }
   }
 }
