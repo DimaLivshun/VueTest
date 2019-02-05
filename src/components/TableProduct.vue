@@ -29,14 +29,15 @@
           <th class="price"><p>Price</p></th>
         </tr>
         <tr v-for="(item, index) in SearchtableFilter"
+            class="table-items"
         >
-          <th> <img v-bind:src="item.img" alt=""> </th>
-          <th>
+          <th class="image-box"> <img v-bind:src="item.img" alt=""> </th>
+          <th class="description-box">
             <a href="#" v-on:click="onItem(index)"> {{ item.title }} </a>
             <p>{{ item.description  }} </p>
           </th>
-          <th> <p>{{ item.category  }}</p> </th>
-          <th>
+          <th class="category-box"> <p>{{ item.category  }}</p> </th>
+          <th class="price-box">
             <p>{{ item.price  }}</p>
             <button v-on:click="delPosition(index)"></button>
           </th>
@@ -139,7 +140,6 @@ export default {
   -khtml-border-radius: 10px;
   background: #f8f8f8;
   display: block;
-  
 }
 .table-content .table-block .table-head{
   padding: 20px 0;
@@ -153,7 +153,10 @@ export default {
   width: 15%;
 }
 .table-content .table-block .table-head .name{
-  width: 55%;
+  width: 60%;
+}
+.table-content .table-block .table-head .category{
+  width: 10%;
 }
 .table-content .table-block .table-head .image p{
   margin-left: 20px;
@@ -161,15 +164,30 @@ export default {
 .table-content .table-block .table-head .price p{
   margin-right: 20px;
 }
-.table-content .table-block img{
+.table-content .table-block  p{
+  margin-right: 20px;
+}
+.table-content .table-block .table-items img{
   width: 50%;
   margin-right: 30px;
 }
-.table-content .table-block a{
+.table-content .table-block .table-items a{
   display: block;
   text-align: left;
   color: #419dff;
   font-size: 20px;
+}
+.table-content .table-block .table-items .description-box p{
+  text-align: left;
+  font-size: 19px;
+  font-weight: normal;
+  color: #b8b8b8;
+}
+.table-content .table-block .table-items .category-box p{
+  text-align: left;
+  font-size: 17px;
+  font-weight: 600;
+  color: #6c6c6c;
 }
 .message{
   text-align: left;
