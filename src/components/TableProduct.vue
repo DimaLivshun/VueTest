@@ -29,6 +29,8 @@
           <th class="price"><p>Price</p></th>
         </tr>
         <tr v-for="(item, index) in SearchtableFilter"
+            v-on:mouseover="ShowButton = index"
+            v-on:mouseout="ShowButton = null"
             class="table-items"
         >
           <th class="image-box"> <img v-bind:src="item.img" alt=""> </th>
@@ -39,7 +41,14 @@
           <th class="category-box"> <p>{{ item.category  }}</p> </th>
           <th class="price-box">
             <p>{{ item.price  }}</p>
-            <button v-on:click="delPosition(index)"></button>
+            <i>UAH</i>
+
+            <button v-on:click="delPosition(index)"
+                    v-show="ShowButton === index"
+
+            >
+              <img src="./DelButton.png" alt="">
+            </button>
           </th>
         </tr>
       </table>
@@ -53,11 +62,12 @@ import json from '../items.json'
 export default {
   data () {
     return {
-      message: 'items catalog',
+      message: 'Items catalog',
       info: json.items,
       state: 'visible',
       SearchItem:'',
       SelectCategory: 'All',
+      ShowButton:null
     }
   },
   methods: {
@@ -140,6 +150,7 @@ export default {
   -khtml-border-radius: 10px;
   background: #f8f8f8;
   display: block;
+  border:1px solid #e5e5e5;
 }
 .table-content .table-block .table-head{
   padding: 20px 0;
@@ -162,32 +173,65 @@ export default {
   margin-left: 20px;
 }
 .table-content .table-block .table-head .price p{
-  margin-right: 20px;
-}
-.table-content .table-block  p{
-  margin-right: 20px;
+  text-align: left;
 }
 .table-content .table-block .table-items img{
   width: 50%;
-  margin-right: 30px;
+  margin: 10px 30px 10px 0;
 }
 .table-content .table-block .table-items a{
   display: block;
   text-align: left;
   color: #419dff;
   font-size: 20px;
+  font-weight: normal;
+}
+.table-content .table-block .table-items a:hover{
+  text-decoration: none;
 }
 .table-content .table-block .table-items .description-box p{
   text-align: left;
   font-size: 19px;
   font-weight: normal;
-  color: #b8b8b8;
+  color: #b2b2b2;
 }
 .table-content .table-block .table-items .category-box p{
   text-align: left;
   font-size: 17px;
   font-weight: 600;
   color: #6c6c6c;
+}
+.table-content .table-block .table-items .price-box{
+  text-align: left;
+}
+.table-content .table-block .table-items .price-box p{
+  display: inline-block;
+  font-size: 20px;
+  color:#ff9900;
+}
+.table-content .table-block .table-items .price-box i{
+  display: inline-block;
+  font-size: 16px;
+  color:#ef9000;
+  font-style:normal;
+}
+.table-content .table-block .table-items .price-box button{
+  width: 20%;
+  background: transparent;
+  border: none;
+  position: relative;
+  float: right;
+  right: 25px;
+  bottom: 6px;
+}
+.table-content .table-block .table-items .price-box button:hover{
+  cursor: pointer;
+}
+.table-content .table-block .table-items .price-box button:focus{
+  outline: none
+}
+.table-content .table-block .table-items .price-box button img{
+  width: 90%;
 }
 .message{
   text-align: left;
@@ -204,6 +248,9 @@ export default {
   display: inline-block;
   float:left;
 }
+.select select:focus {
+  outline: none;
+}
 .select:after {
   background: url('./select_arrow.png') no-repeat;
   content: "";
@@ -211,7 +258,7 @@ export default {
   font-size: 16px;
   position: absolute;
   right: 4px;
-  top: 20px;
+  top: 22px;
   z-index: 1;
   text-align: center;
   width: 10%;
@@ -224,10 +271,14 @@ select {
   width: 200px;
   padding-left: 10px;
   border-radius: 5px;
-  border: 1px solid grey;
+  border: 1px solid #cfcfcf;
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
+  background: #f2f2f2;
+}
+select:focus {
+  background: #ffffff;
 }
 select option{
   color:grey;
@@ -240,10 +291,6 @@ form {
 .d3{
   float: right;
 }
-.d3 form {
-  background: #eae9e9;
-  border-radius: 5px;
-}
 .d3 input, .d3 button {
   border: none;
   outline: none;
@@ -253,6 +300,13 @@ form {
   width: 100%;
   height: 50px;
   padding-left: 15px;
+  background: #f2f2f2;
+  border-radius: 5px;
+  border: 1px solid #cfcfcf;
+}
+.d3 input:active, input:focus {
+  background: #ffffff;
+  border: 1px solid #1E90FF;
 }
 .d3 button {
   height: 50px;
