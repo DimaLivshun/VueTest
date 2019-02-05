@@ -1,44 +1,48 @@
 <template>
   <div id="test">
-    <h2 class="message"> {{ message }}</h2>
-    <div class="select">
-      <span>Category</span>
-      <select v-model="SelectCategory"
-              v-on:click="ArrPushSort"
-      >
-        <option value="All" selected>All</option>
-        <option value="Зимние шины">Зимние шины</option>
-        <option value="Летние шины">Летние шины</option>
-        <option value="Всесезонные шины">Всесезонные шины</option>
-      </select>
+    <div class="top">
+      <h2 class="message"> {{ message }}</h2>
+      <div class="select">
+        <span>Category</span>
+        <select v-model="SelectCategory"
+                v-on:click="ArrPushSort"
+        >
+          <option value="All" selected>All</option>
+          <option value="Зимние шины">Зимние шины</option>
+          <option value="Летние шины">Летние шины</option>
+          <option value="Всесезонные шины">Всесезонные шины</option>
+        </select>
+      </div>
+      <div class="d3">
+        <form>
+          <input type="text" placeholder="Search" v-model="SearchItem">
+          <button></button>
+        </form>
+      </div>
     </div>
-    <div class="d3">
-      <form>
-        <input type="text" placeholder="Search" v-model="SearchItem">
-        <button></button>
-      </form>
+    <div class="table-content">
+      <table class="table-block">
+        <tr class="table-head">
+          <th class="image"><p>Image</p></th>
+          <th class="name"><p>Name</p></th>
+          <th class="category"><p>Category</p></th>
+          <th class="price"><p>Price</p></th>
+        </tr>
+        <tr v-for="(item, index) in SearchtableFilter"
+        >
+          <th> <img v-bind:src="item.img" alt=""> </th>
+          <th>
+            <a href="#" v-on:click="onItem(index)"> {{ item.title }} </a>
+            <p>{{ item.description  }} </p>
+          </th>
+          <th> <p>{{ item.category  }}</p> </th>
+          <th>
+            <p>{{ item.price  }}</p>
+            <button v-on:click="delPosition(index)"></button>
+          </th>
+        </tr>
+      </table>
     </div>
-    <table>
-      <tr>
-        <th><p>Image</p></th>
-        <th><p>Name</p></th>
-        <th><p>Category</p></th>
-        <th><p>Price</p></th>
-      </tr>
-      <tr v-for="(item, index) in SearchtableFilter"
-      >
-        <th> {{ item.id }} </th>
-        <th>
-          <a href="#" v-on:click="onItem(index)"> {{ item.title }} </a>
-          {{ item.description  }} 
-        </th>
-        <th> {{ item.category  }} </th>
-        <th>
-          {{ item.price  }}
-          <button v-on:click="delPosition(index)"></button>
-        </th>
-      </tr>
-    </table>
   </div>
 </template>
 
@@ -115,6 +119,58 @@ export default {
 *{
   box-sizing: border-box;
 }
+.top{
+  display: inline-block;
+  width: 100%;
+}
+.top .d3,.select{
+  display: inline-block;
+}
+.table-content{
+  margin-top: 25px;
+}
+.table-content .table-block tr{
+  border-bottom: 1px solid #e5e5e5;
+}
+.table-content .table-block{
+  border-radius: 15px;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  -khtml-border-radius: 10px;
+  background: #f8f8f8;
+  display: block;
+  
+}
+.table-content .table-block .table-head{
+  padding: 20px 0;
+}
+.table-content .table-block .table-head p{
+  font-size: 20px;
+  margin: 20px 0;
+  text-align: left;
+}
+.table-content .table-block .table-head .image{
+  width: 15%;
+}
+.table-content .table-block .table-head .name{
+  width: 55%;
+}
+.table-content .table-block .table-head .image p{
+  margin-left: 20px;
+}
+.table-content .table-block .table-head .price p{
+  margin-right: 20px;
+}
+.table-content .table-block img{
+  width: 50%;
+  margin-right: 30px;
+}
+.table-content .table-block a{
+  display: block;
+  text-align: left;
+  color: #419dff;
+  font-size: 20px;
+}
 .message{
   text-align: left;
   margin-bottom: 25px;
@@ -167,7 +223,7 @@ form {
   float: right;
 }
 .d3 form {
-  background: #e4e4e4;
+  background: #eae9e9;
   border-radius: 5px;
 }
 .d3 input, .d3 button {

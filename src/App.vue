@@ -37,7 +37,7 @@ export default {
 
 <style scoped>
 	.test{
-		margin: 20px;
+		margin: 30px;
 		text-align: center;
 	}
 	
